@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "658376515361",
+    "project_id": "managment-system-college",
+    "storage_bucket": "managment-system-college.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658376515361:android:943e1ba89963a9dc9be860",
+        "android_client_info": {
+          "package_name": "com.example.untitled4"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ37kqzOdCsoXTRmJAtG1hwZm1drDwZWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
