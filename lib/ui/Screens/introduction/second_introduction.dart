@@ -28,11 +28,8 @@ class SecondIntroduction extends StatelessWidget {
               const Text("Welcome to fci",
                 style: TextStyle(fontSize: 24,fontWeight: FontWeight.w700),
               ),
-              const SizedBox(height: 40),
-              const Text("111",
-                style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400),
-              ),
-              const SizedBox(height: 120),
+
+              const SizedBox(height: 160),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

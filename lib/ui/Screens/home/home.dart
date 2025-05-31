@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled4/provider/project_provider.dart';
 import 'package:untitled4/ui/Screens/icon_page/assignments_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/books_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/gpa_page.dart';
@@ -11,14 +13,20 @@ import 'package:untitled4/ui/Screens/icon_page/table_page.dart';
 import '../news/news.dart';
 
 /// A simple reusable empty page that displays its [title].
-class EmptyPage extends StatelessWidget {
+class EmptyPage extends StatefulWidget {
   final String title;
   const EmptyPage({super.key, required this.title});
+
+  @override
+  State<EmptyPage> createState() => _EmptyPageState();
+}
+
+class _EmptyPageState extends State<EmptyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(child: Text('This is the $title page')),
+      appBar: AppBar(title: Text(widget.title)),
+      body: Center(child: Text('This is the ${widget.title} page')),
     );
   }
 }
@@ -48,19 +56,19 @@ class _HomeState extends State<Home> {
     {
       "title": "Student Union Elections Start at FCI",
       "description":
-      "Under patronage and in attendance of Prof. Mohamad Hussein, Acting Tanta University President.",
+          "Under patronage and in attendance of Prof. Mohamad Hussein, Acting Tanta University President.",
       "image": "assets/images/news.png"
     },
     {
       "title": "New Semester Courses Announced",
       "description":
-      "Check the latest updates on course offerings for the upcoming semester.",
+          "Check the latest updates on course offerings for the upcoming semester.",
       "image": "assets/images/news2.png"
     },
     {
       "title": "Library Resources Updated",
       "description":
-      "Access new books and research materials available in the library.",
+          "Access new books and research materials available in the library.",
       "image": "assets/images/news3.png"
     },
   ];
@@ -76,7 +84,8 @@ class _HomeState extends State<Home> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Books'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorites'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite), label: 'Favorites'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
@@ -104,12 +113,17 @@ class _HomeState extends State<Home> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Hallo,", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  Text("Hallo,",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                   SizedBox(height: 4),
-                  Text("Mostafa Ali", style: TextStyle(fontSize: 16, color: Colors.black)),
+                  Text("Mostafa Ali",
+                      style: TextStyle(fontSize: 16, color: Colors.black)),
                 ],
               ),
-              CircleAvatar(radius: 30, backgroundImage: AssetImage('assets/images/profile.png')),
+              CircleAvatar(
+                  radius: 30,
+                  backgroundImage: AssetImage('assets/images/profile.png')),
             ],
           ),
           const SizedBox(height: 16),
@@ -117,7 +131,8 @@ class _HomeState extends State<Home> {
             decoration: InputDecoration(
               hintText: "Search",
               prefixIcon: const Icon(Icons.search, color: Colors.blue),
-              suffixIcon: const Icon(Icons.notifications, color: Colors.blueAccent),
+              suffixIcon:
+                  const Icon(Icons.notifications, color: Colors.blueAccent),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
                 borderSide: const BorderSide(color: Colors.grey, width: 2),
@@ -144,7 +159,8 @@ class _HomeState extends State<Home> {
             ),
           ),
           const SizedBox(height: 16),
-          const Text("Latest News", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text("Latest News",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           SizedBox(height: 280, child: buildNewsCard(sortedNews[0])),
           const SizedBox(height: 16),
@@ -204,11 +220,16 @@ class _HomeState extends State<Home> {
         Container(
           width: 80,
           height: 80,
-          decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(12)),
-          child: ClipRRect(borderRadius: BorderRadius.circular(12), child: Image.asset(iconItems[index]["image"]!, fit: BoxFit.cover)),
+          decoration: BoxDecoration(
+              color: Colors.grey[200], borderRadius: BorderRadius.circular(12)),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child:
+                  Image.asset(iconItems[index]["image"]!, fit: BoxFit.cover)),
         ),
         const SizedBox(height: 8),
-        Text(iconItems[index]["title"]!, textAlign: TextAlign.center, style: const TextStyle(fontSize: 12)),
+        Text(iconItems[index]["title"]!,
+            textAlign: TextAlign.center, style: const TextStyle(fontSize: 12)),
       ],
     );
   }
@@ -232,11 +253,19 @@ class _HomeState extends State<Home> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-              child: Image.asset(item['image']!, width: double.infinity, height: 180, fit: BoxFit.cover),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(12)),
+              child: Image.asset(item['image']!,
+                  width: double.infinity, height: 180, fit: BoxFit.cover),
             ),
-            Padding(padding: const EdgeInsets.all(8.0), child: Text(item['title']!, style: const TextStyle(fontWeight: FontWeight.bold))),
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0), child: Text(item['description']!, style: const TextStyle(color: Colors.grey, fontSize: 12))),
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(item['title']!,
+                    style: const TextStyle(fontWeight: FontWeight.bold))),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(item['description']!,
+                    style: const TextStyle(color: Colors.grey, fontSize: 12))),
             const SizedBox(height: 8),
           ],
         ),
@@ -249,14 +278,23 @@ class _HomeState extends State<Home> {
       child: Column(
         children: [
           const SizedBox(height: 20),
-          const Text('Account', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blue)),
+          const Text('Account',
+              style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue)),
           const SizedBox(height: 16),
           Stack(
             alignment: Alignment.bottomRight,
             children: [
-              const CircleAvatar(radius: 50, backgroundImage: AssetImage('assets/images/profile.png')),
+              const CircleAvatar(
+                  radius: 50,
+                  backgroundImage: AssetImage('assets/images/profile.png')),
               Container(
-                decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white, border: Border.all(color: Colors.blue)),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    border: Border.all(color: Colors.blue)),
                 padding: const EdgeInsets.all(4),
                 child: const Icon(Icons.edit, size: 20, color: Colors.blue),
               ),
@@ -264,7 +302,11 @@ class _HomeState extends State<Home> {
           ),
           const SizedBox(height: 8),
           const Text.rich(
-            TextSpan(text: 'Hi, ', style: TextStyle(fontSize: 16), children: [TextSpan(text: 'Mostafa Ali', style: TextStyle(fontWeight: FontWeight.bold))]),
+            TextSpan(text: 'Hi, ', style: TextStyle(fontSize: 16), children: [
+              TextSpan(
+                  text: 'Mostafa Ali',
+                  style: TextStyle(fontWeight: FontWeight.bold))
+            ]),
           ),
           const SizedBox(height: 16),
           Expanded(
@@ -277,7 +319,11 @@ class _HomeState extends State<Home> {
                 const ExpansionTile(
                   leading: Icon(Icons.chat, color: Colors.blue),
                   title: Text('Contact us'),
-                  children: [ListTile(title: Text('Email: mostafaapoqura1732003@mail.com')), ListTile(title: Text('Phone: 01115792456'))],
+                  children: [
+                    ListTile(
+                        title: Text('Email: mostafaapoqura1732003@mail.com')),
+                    ListTile(title: Text('Phone: 01115792456'))
+                  ],
                 ),
               ],
             ),
@@ -292,7 +338,8 @@ class _HomeState extends State<Home> {
       leading: Icon(icon, color: Colors.blue),
       title: Text(title),
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) => EmptyPage(title: title)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (_) => EmptyPage(title: title)));
       },
     );
   }

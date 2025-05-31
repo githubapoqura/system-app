@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "658376515361",
-    "project_id": "managment-system-college",
-    "storage_bucket": "managment-system-college.firebasestorage.app"
+    "project_number": "371275512225",
+    "project_id": "graduation-app-3dc18",
+    "storage_bucket": "graduation-app-3dc18.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:658376515361:android:943e1ba89963a9dc9be860",
+        "mobilesdk_app_id": "1:371275512225:android:e02b60328fb5a21134f3e0",
         "android_client_info": {
           "package_name": "com.example.untitled4"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDZ37kqzOdCsoXTRmJAtG1hwZm1drDwZWY"
+          "current_key": "AIzaSyC5U-LSxLIOp9FuxWtVjvYVWmBr7U_MZ10"
         }
       ],
       "services": {

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:untitled4/project_Dm.dart';
+import 'package:untitled4/provider/project_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({super.key});
@@ -9,7 +13,6 @@ class ProjectsPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<ProjectsPage> {
-  final List<Map<String, String>> _projects = [];
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _linkController = TextEditingController();
@@ -18,13 +21,15 @@ class _ProjectsPageState extends State<ProjectsPage> {
     if (_titleController.text.isNotEmpty &&
         _descriptionController.text.isNotEmpty &&
         _linkController.text.isNotEmpty) {
-      setState(() {
-        _projects.add({
-          'title': _titleController.text,
-          'description': _descriptionController.text,
-          'link': _linkController.text,
-        });
-      });
+      ProjectModel project = ProjectModel(
+        title: _titleController.text,
+        describtion: _descriptionController.text,
+        date: DateTime.now(),
+        link: _linkController.text,
+      );
+
+      Provider.of<ProjectProvider>(context, listen: false).addProject(project);
+
       _titleController.clear();
       _descriptionController.clear();
       _linkController.clear();
@@ -72,7 +77,18 @@ class _ProjectsPageState extends State<ProjectsPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      Provider.of<ProjectProvider>(context, listen: false).fetchProjects();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final projectProvider = Provider.of<ProjectProvider>(context);
+    final projects = projectProvider.projects;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Projects'),
@@ -83,39 +99,45 @@ class _ProjectsPageState extends State<ProjectsPage> {
         child: Column(
           children: [
             Expanded(
-              child: _projects.isEmpty
+              child: projects.isEmpty
                   ? const Center(
                       child: Text('No projects added yet.',
                           style: TextStyle(fontSize: 16, color: Colors.grey)),
                     )
                   : ListView.builder(
-                      itemCount: _projects.length,
+                      itemCount: projects.length,
                       itemBuilder: (context, index) {
-                        final project = _projects[index];
+                        final project = projects[index];
                         return Card(
                           margin: const EdgeInsets.symmetric(vertical: 8),
                           child: ListTile(
-                            title: Text(project['title']!),
+                            title: Text(project.title ?? ''),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(project['description']!),
+                                Text(project.describtion ?? ''),
                                 GestureDetector(
                                   onTap: () async {
-                                    final Uri url = Uri.parse(project['link']!);
-                                    if (await canLaunchUrl(url)) {
-                                      await launchUrl(url);
+                                    String webUrl =
+                                        project.link ?? 'https://flutter.dev';
+                                    if (!webUrl.startsWith('http')) {
+                                      webUrl = 'https://$webUrl';
+                                    }
+
+                                    if (await canLaunchUrlString(webUrl)) {
+                                      await launchUrlString(webUrl,
+                                          mode: LaunchMode.externalApplication);
                                     } else {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
-                                        const SnackBar(
+                                        SnackBar(
                                             content:
-                                                Text('Could not launch URL')),
+                                                Text("Can't launch $webUrl")),
                                       );
                                     }
                                   },
                                   child: Text(
-                                    project['link']!,
+                                    project.link ?? '',
                                     style: const TextStyle(
                                       color: Colors.blue,
                                       decoration: TextDecoration.underline,
@@ -145,35 +167,5 @@ class _ProjectsPageState extends State<ProjectsPage> {
     _descriptionController.dispose();
     _linkController.dispose();
     super.dispose();
-  }
-}
-
-class FigmaPage extends StatelessWidget {
-  const FigmaPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Figma Page'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(
-              Icons.design_services,
-              size: 100,
-              color: Colors.blue,
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Welcome to the Figma Page!',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }
