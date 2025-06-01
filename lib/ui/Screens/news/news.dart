@@ -20,7 +20,7 @@ class NewsPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(imageUrl, fit: BoxFit.cover, width: double.infinity),
+          Image.network(imageUrl, fit: BoxFit.cover, width: double.infinity),
           const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),

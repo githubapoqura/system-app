@@ -47,26 +47,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
-  final List<NewsModel> staticNewsItems = [
-    NewsModel(
-      title: "Student Union Elections Start at FCI",
-      description:
-          "Under patronage and in attendance of Prof. Mohamad Hussein, Acting Tanta University President.",
-      image: "assets/images/news.png",
-    ),
-    NewsModel(
-      title: "New Semester Courses Announced",
-      description:
-          "Check the latest updates on course offerings for the upcoming semester.",
-      image: "assets/images/news2.png",
-    ),
-    NewsModel(
-      title: "Library Resources Updated",
-      description:
-          "Access new books and research materials available in the library.",
-      image: "assets/images/news3.png",
-    ),
-  ];
+
 
   final List<Map<String, String>> iconItems = [
     {"title": "Books", "image": "assets/icons/books.png"},
@@ -183,33 +164,7 @@ class _HomeState extends State<Home> {
               child: buildNewsCard(sortedNews[i + 1]),
             ),
           ),
-          ListView.builder(
-            itemCount: staticNewsItems.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              final news = staticNewsItems[index];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => NewsPage(
-                        title: news.title,
-                        description: news.description,
-                        imageUrl: news.image,
-                      ),
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 8.0),
-                  child: StaticNewsCard(news: news),
-                ),
-              );
-            },
-          )
+
         ],
       ),
     );

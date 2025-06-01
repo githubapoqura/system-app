@@ -19,6 +19,7 @@ import 'package:untitled4/ui/Screens/student/student.dart';
 import 'firebase_options.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -38,7 +39,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/login',
+      initialRoute: Splash.routeName,
+
       routes: {
         '/student': (_) => const Student(),
         Splash.routeName: (_) => const Splash(),

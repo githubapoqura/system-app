@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../introduction/introduction.dart';
+
 class Splash extends StatelessWidget {
   static const String routeName = "/";
   const Splash({super.key});
@@ -7,7 +9,7 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 4), () {
-      Navigator.pushReplacementNamed(context, '/login');
+      Navigator.pushReplacementNamed(context,  Introduction.routeName);
     });
 
     return Scaffold(

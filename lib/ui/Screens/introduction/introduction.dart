@@ -30,7 +30,7 @@ class Introduction extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(icon: Image.asset('assets/icons/skip.png'), onPressed: () {
-                Navigator.pushReplacementNamed(context, SecondIntroduction.routeName);
+                Navigator.pushNamed(context, SecondIntroduction.routeName);
               },
               ),
 
