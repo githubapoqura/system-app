@@ -111,31 +111,44 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         return Card(
                           margin: const EdgeInsets.symmetric(vertical: 8),
                           child: ListTile(
-                            title: Text(project.title ?? ''),
+                            title: Text(project.title),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(project.describtion ?? ''),
+                                Text(project.describtion),
                                 GestureDetector(
                                   onTap: () async {
-                                    String webUrl =
-                                        project.link ?? 'https://flutter.dev';
-                                    if (!webUrl.startsWith('http')) {
-                                      webUrl = 'https://$webUrl';
-                                    }
-
-                                    if (await canLaunchUrlString(webUrl)) {
-                                      await launchUrlString(webUrl,
-                                          mode: LaunchMode.externalApplication);
+                                    final Uri url = Uri.parse(project.link);
+                                    if (await canLaunchUrl(url)) {
+                                      await launchUrl(url);
                                     } else {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
-                                        SnackBar(
+                                        const SnackBar(
                                             content:
-                                                Text("Can't launch $webUrl")),
+                                                Text('Could not launch URL')),
                                       );
                                     }
                                   },
+                                  // async {
+                                  //   String webUrl =
+                                  //       project.link ?? 'https://flutter.dev';
+                                  //   if (!webUrl.startsWith('http')) {
+                                  //     webUrl = 'https://$webUrl';
+                                  //   }
+
+                                  //   if (await canLaunchUrlString(webUrl)) {
+                                  //     await launchUrlString(webUrl,
+                                  //         mode: LaunchMode.externalApplication);
+                                  //   } else {
+                                  //     ScaffoldMessenger.of(context)
+                                  //         .showSnackBar(
+                                  //       SnackBar(
+                                  //           content:
+                                  //               Text("Can't launch $webUrl")),
+                                  //     );
+                                  //   }
+                                  // },
                                   child: Text(
                                     project.link ?? '',
                                     style: const TextStyle(

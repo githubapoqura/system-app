@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:untitled4/news_model.dart';
 import 'package:untitled4/provider/project_provider.dart';
+import 'package:untitled4/ui/Screens/home/card_news.dart';
 import 'package:untitled4/ui/Screens/icon_page/assignments_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/books_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/gpa_page.dart';
@@ -12,7 +14,6 @@ import 'package:untitled4/ui/Screens/icon_page/summer_course_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/table_page.dart';
 import '../news/news.dart';
 
-/// A simple reusable empty page that displays its [title].
 class EmptyPage extends StatefulWidget {
   final String title;
   const EmptyPage({super.key, required this.title});
@@ -22,6 +23,13 @@ class EmptyPage extends StatefulWidget {
 }
 
 class _EmptyPageState extends State<EmptyPage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(
+        () => Provider.of<ProjectProvider>(context, listen: false).loadNews());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +47,26 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
+  final List<NewsModel> staticNewsItems = [
+    NewsModel(
+      title: "Student Union Elections Start at FCI",
+      description:
+          "Under patronage and in attendance of Prof. Mohamad Hussein, Acting Tanta University President.",
+      image: "assets/images/news.png",
+    ),
+    NewsModel(
+      title: "New Semester Courses Announced",
+      description:
+          "Check the latest updates on course offerings for the upcoming semester.",
+      image: "assets/images/news2.png",
+    ),
+    NewsModel(
+      title: "Library Resources Updated",
+      description:
+          "Access new books and research materials available in the library.",
+      image: "assets/images/news3.png",
+    ),
+  ];
 
   final List<Map<String, String>> iconItems = [
     {"title": "Books", "image": "assets/icons/books.png"},
@@ -52,29 +80,11 @@ class _HomeState extends State<Home> {
     {"title": "Summary", "image": "assets/icons/summary.png"},
   ];
 
-  final List<Map<String, String>> newsItems = [
-    {
-      "title": "Student Union Elections Start at FCI",
-      "description":
-          "Under patronage and in attendance of Prof. Mohamad Hussein, Acting Tanta University President.",
-      "image": "assets/images/news.png"
-    },
-    {
-      "title": "New Semester Courses Announced",
-      "description":
-          "Check the latest updates on course offerings for the upcoming semester.",
-      "image": "assets/images/news2.png"
-    },
-    {
-      "title": "Library Resources Updated",
-      "description":
-          "Access new books and research materials available in the library.",
-      "image": "assets/images/news3.png"
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ProjectProvider>(context);
+    List<NewsModel> sortedNews = List.from(provider.newsItems.reversed);
+
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -92,7 +102,7 @@ class _HomeState extends State<Home> {
       body: IndexedStack(
         index: _currentIndex,
         children: [
-          _homeContent(),
+          _homeContent(sortedNews),
           const BooksPage(),
           const Center(child: Text('Favorites Page')),
           _profileContent(),
@@ -101,8 +111,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _homeContent() {
-    List<Map<String, String>> sortedNews = List.from(newsItems.reversed);
+  Widget _homeContent(List<NewsModel> sortedNews) {
     return SafeArea(
       child: ListView(
         padding: const EdgeInsets.all(16.0),
@@ -162,17 +171,30 @@ class _HomeState extends State<Home> {
           const Text("Latest News",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
-          SizedBox(height: 280, child: buildNewsCard(sortedNews[0])),
+          if (sortedNews.isNotEmpty)
+            SizedBox(height: 280, child: buildNewsCard(sortedNews[0])),
           const SizedBox(height: 16),
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: sortedNews.length,
+            itemCount: sortedNews.length > 1 ? sortedNews.length - 1 : 0,
             itemBuilder: (context, i) => Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
-              child: buildNewsCard(sortedNews[i]),
+              child: buildNewsCard(sortedNews[i + 1]),
             ),
           ),
+          ListView.builder(
+              itemCount: staticNewsItems.length,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final news = staticNewsItems[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 8.0),
+                  child: StaticNewsCard(news: news),
+                );
+              }),
         ],
       ),
     );
@@ -234,15 +256,15 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget buildNewsCard(Map<String, String> item) {
+  Widget buildNewsCard(NewsModel item) {
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
           builder: (_) => NewsPage(
-            title: item['title']!,
-            description: item['description']!,
-            imageUrl: item['image']!,
+            title: item.title,
+            description: item.description,
+            imageUrl: item.image,
           ),
         ),
       ),
@@ -255,17 +277,19 @@ class _HomeState extends State<Home> {
             ClipRRect(
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(12)),
-              child: Image.asset(item['image']!,
+              child: Image.network(item.image,
                   width: double.infinity, height: 180, fit: BoxFit.cover),
             ),
             Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(item['title']!,
-                    style: const TextStyle(fontWeight: FontWeight.bold))),
+              padding: const EdgeInsets.all(8.0),
+              child: Text(item.title,
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+            ),
             Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(item['description']!,
-                    style: const TextStyle(color: Colors.grey, fontSize: 12))),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(item.description,
+                  style: const TextStyle(color: Colors.grey, fontSize: 12)),
+            ),
             const SizedBox(height: 8),
           ],
         ),

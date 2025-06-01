@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:untitled4/firebase.dart';
+import 'package:untitled4/subject_DM.dart';
 
 class SummerCoursePage extends StatefulWidget {
   const SummerCoursePage({super.key});
@@ -8,44 +10,73 @@ class SummerCoursePage extends StatefulWidget {
 }
 
 class _SummerCoursePageState extends State<SummerCoursePage> {
-  final List<Map<String, dynamic>> _courses = [
-    {
-      'title': 'Introduction to Programming',
-      'description': 'Learn the basics of programming with hands-on examples.',
-      'hours': 3,
-      'instructor': 'Dr. John Doe',
-      'selected': false,
-    },
-    {
-      'title': 'Graphic Design Basics',
-      'description': 'Explore the fundamentals of graphic design and tools.',
-      'hours': 2,
-      'instructor': 'Dr. Jane Smith',
-      'selected': false,
-    },
-    {
-      'title': 'Data Science 101',
-      'description':
-          'An introductory course to data analysis and visualization.',
-      'hours': 4,
-      'instructor': 'Dr. Emily Davis',
-      'selected': false,
-    },
+  final List<SubjectModel> _courses = [
+    SubjectModel(
+      title: 'Introduction to Programming',
+      hours: 3,
+      instructor: 'Dr. John Doe',
+      selected: false,
+    ),
+    SubjectModel(
+      title: 'Graphic Design Basics',
+      hours: 2,
+      instructor: 'Dr. Jane Smith',
+      selected: false,
+    ),
+    SubjectModel(
+      title: 'Data Science 101',
+      hours: 4,
+      instructor: 'Dr. Emily Davis',
+      selected: false,
+    ),
   ];
 
-  final List<Map<String, dynamic>> _enrolledCourses = [];
+  final List<SubjectModel> _enrolledCourses = [];
 
-  void _enrollCourses() {
+  void _enrollCourses() async {
     setState(() {
       _enrolledCourses.clear();
-      _enrolledCourses.addAll(_courses.where((course) => course['selected']));
-      final int totalHours = _enrolledCourses.fold(
-          0, (int sum, course) => sum + (course['hours'] as int));
-      if (totalHours > 6) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('You can only register up to 6 hours.')),
+      _enrolledCourses.addAll(_courses.where((course) => course.selected));
+    });
+
+    final int totalHours =
+        _enrolledCourses.fold(0, (int sum, course) => sum + course.hours);
+    if (totalHours > 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('You can only register up to 6 hours.')),
+      );
+      _enrolledCourses.clear();
+      return;
+    }
+
+    await Services().clearSummerCourses();
+    await Services().registerSummerCourses(_enrolledCourses);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Courses enrolled successfully!')),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadEnrolledCourses();
+  }
+
+  Future<void> _loadEnrolledCourses() async {
+    final fetchedCourses = await Services().fetchRegisteredSummerSubjects();
+    setState(() {
+      _enrolledCourses.clear();
+      _enrolledCourses.addAll(fetchedCourses);
+
+      for (var course in _courses) {
+        course.selected = fetchedCourses.any(
+          (c) =>
+              c.title.trim().toLowerCase() ==
+                  course.title.trim().toLowerCase() &&
+              c.instructor.trim().toLowerCase() ==
+                  course.instructor.trim().toLowerCase() &&
+              c.hours == course.hours,
         );
-        _enrolledCourses.clear();
       }
     });
   }
@@ -83,21 +114,19 @@ class _SummerCoursePageState extends State<SummerCoursePage> {
                     child: Row(
                       children: [
                         Checkbox(
-                          value: course['selected'],
+                          value: course.selected,
                           onChanged: (value) {
                             setState(() {
                               final int newTotalHours = _courses.fold(
                                       0,
                                       (int sum, course) =>
                                           sum +
-                                          (course['selected']
-                                              ? course['hours'] as int
+                                          (course.selected
+                                              ? course.hours
                                               : 0)) +
-                                  (value!
-                                      ? course['hours'] as int
-                                      : -(course['hours'] as int));
+                                  (value! ? course.hours : -course.hours);
                               if (newTotalHours <= 6) {
-                                course['selected'] = value;
+                                course.selected = value;
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
@@ -114,7 +143,7 @@ class _SummerCoursePageState extends State<SummerCoursePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                course['title'],
+                                course.title,
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -122,7 +151,7 @@ class _SummerCoursePageState extends State<SummerCoursePage> {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                course['description'],
+                                'Instructor: ${course.instructor}',
                                 style: const TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey,
@@ -208,15 +237,15 @@ class _SummerCoursePageState extends State<SummerCoursePage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(course['title']),
+                            child: Text(course.title),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(course['hours'].toString()),
+                            child: Text(course.hours.toString()),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(course['instructor']),
+                            child: Text(course.instructor),
                           ),
                         ],
                       );
