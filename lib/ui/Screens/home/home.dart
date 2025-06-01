@@ -184,17 +184,32 @@ class _HomeState extends State<Home> {
             ),
           ),
           ListView.builder(
-              itemCount: staticNewsItems.length,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final news = staticNewsItems[index];
-                return Padding(
+            itemCount: staticNewsItems.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final news = staticNewsItems[index];
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => NewsPage(
+                        title: news.title,
+                        description: news.description,
+                        imageUrl: news.image,
+                      ),
+                    ),
+                  );
+                },
+                child: Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 16.0, vertical: 8.0),
                   child: StaticNewsCard(news: news),
-                );
-              }),
+                ),
+              );
+            },
+          )
         ],
       ),
     );

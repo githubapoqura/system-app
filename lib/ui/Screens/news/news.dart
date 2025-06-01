@@ -5,14 +5,17 @@ class NewsPage extends StatelessWidget {
   final String description;
   final String imageUrl;
 
-  const NewsPage({super.key, required this.title, required this.description, required this.imageUrl});
+  const NewsPage(
+      {super.key,
+      required this.title,
+      required this.description,
+      required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title,
-            style: const TextStyle(fontSize: 18)),
+        title: Text(title, style: const TextStyle(fontSize: 18)),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,7 +23,7 @@ class NewsPage extends StatelessWidget {
           Image.asset(imageUrl, fit: BoxFit.cover, width: double.infinity),
           const SizedBox(height: 16),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(description, style: const TextStyle(fontSize: 18)),
           ),
         ],
