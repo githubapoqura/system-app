@@ -18,7 +18,8 @@ class _SignupState extends State<Signup> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
-
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,11 +102,20 @@ class _SignupState extends State<Signup> {
                 const SizedBox(height: 8),
                 TextFormField(
                   controller: passwordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  obscureText: _obscurePassword,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: "Enter your password",
-                    suffixIcon: Icon(Icons.visibility_off),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscurePassword = !_obscurePassword;
+                        });
+                      },
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.length < 6) {
@@ -122,11 +132,20 @@ class _SignupState extends State<Signup> {
                 const SizedBox(height: 8),
                 TextFormField(
                   controller: confirmPasswordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
+                  obscureText: _obscureConfirmPassword,
+                  decoration:  InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: "Confirm your password",
-                    suffixIcon: Icon(Icons.visibility_off),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscureConfirmPassword = !_obscureConfirmPassword;
+                        });
+                      },
+                    ),
                   ),
                   validator: (value) {
                     if (value != passwordController.text) {

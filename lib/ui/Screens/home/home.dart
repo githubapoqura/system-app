@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled4/news_model.dart';
-import 'package:untitled4/provider/books_provider.dart';
 import 'package:untitled4/provider/project_provider.dart';
 import 'package:untitled4/ui/Screens/books/choose_year_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/assignments_page.dart';
@@ -10,9 +9,9 @@ import 'package:untitled4/ui/Screens/icon_page/gpa_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/payment_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/projects_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/registration_page.dart';
-import 'package:untitled4/ui/Screens/icon_page/summary_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/summer_course_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/table_page.dart';
+import '../../summary/choose_summary_year.dart';
 import '../news/news.dart';
 
 class Home extends StatefulWidget {
@@ -174,7 +173,7 @@ class _HomeState extends State<Home> {
         page = const RegistrationPage();
         break;
       case 8:
-        page = const SummaryPage();
+        page = const ChooseSummaryYear();
         break;
       default:
         return;

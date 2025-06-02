@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled4/provider/books_provider.dart';
 import 'package:untitled4/provider/project_provider.dart';
+import 'package:untitled4/provider/summary_provider.dart';
 import 'package:untitled4/provider/user_provider.dart';
 import 'package:untitled4/ui/Screens/introduction/introduction.dart';
 import 'package:untitled4/ui/Screens/introduction/second_introduction.dart';
@@ -11,7 +12,7 @@ import 'package:untitled4/ui/Screens/signUp/signUp.dart';
 import 'package:untitled4/ui/Screens/splash/splash.dart';
 import 'package:untitled4/ui/Screens/icon_page/table_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/summer_course_page.dart';
-import 'package:untitled4/ui/Screens/icon_page/summary_page.dart';
+import 'package:untitled4/ui/summary/summary_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/registration_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/projects_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/payment_page.dart';
@@ -31,6 +32,7 @@ void main() async {
           ..fetchProjects()
           ..loadNews()),
     ChangeNotifierProvider(create: (_) => BooksProvider()),
+    ChangeNotifierProvider(create: (_) => SummaryProvider()),
   ], child: const MyApp()));
 }
 
@@ -50,7 +52,7 @@ class MyApp extends StatelessWidget {
         SecondIntroduction.routeName: (_) => const SecondIntroduction(),
         '/table': (_) => const TablePage(),
         '/summer_course': (_) => const SummerCoursePage(),
-        '/summary': (_) => const SummaryPage(),
+        //'/summary': (_) => const SummaryPage(),
         '/registration': (_) => const RegistrationPage(),
         '/projects': (_) => const ProjectsPage(),
         '/payment': (_) => const PaymentPage(),

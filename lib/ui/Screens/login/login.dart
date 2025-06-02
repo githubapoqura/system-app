@@ -14,6 +14,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +53,19 @@ class _LoginState extends State<Login> {
               const SizedBox(height: 8),
               TextField(
                 controller: passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                obscureText: _obscurePassword,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   hintText: "enter your password",
-                  suffixIcon: Icon(Icons.visibility_off),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },),
                 ),
               ),
               const SizedBox(height: 10),

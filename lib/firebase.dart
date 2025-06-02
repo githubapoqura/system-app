@@ -4,6 +4,7 @@ import 'package:untitled4/news_model.dart';
 import 'package:untitled4/project_Dm.dart';
 import 'package:untitled4/subject_DM.dart';
 import 'package:untitled4/ui/Screens/book_Dm.dart';
+import 'package:untitled4/ui/summary/summary_dm.dart';
 import 'package:untitled4/userDm.dart';
 
 class Services {
@@ -156,6 +157,25 @@ class Services {
 
     return querySnapshot.docs.map((doc) {
       return BookModel.fromMap(doc.data());
+    }).toList();
+  }
+
+  final FirebaseFirestore fireStore = FirebaseFirestore.instance;
+
+  Future<List<SummaryModel>> getSummeryForSemester({
+    required String yearId,
+    required String semesterId,
+  }) async {
+    final querySnapshot = await fireStore
+        .collection('summary_sections')
+        .doc(yearId)
+        .collection('semesters')
+        .doc(semesterId)
+        .collection('books')
+        .get();
+
+    return querySnapshot.docs.map((doc) {
+      return SummaryModel.fromMap(doc.data());
     }).toList();
   }
 }
