@@ -11,7 +11,6 @@ import 'package:untitled4/ui/Screens/icon_page/projects_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/registration_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/summer_course_page.dart';
 import 'package:untitled4/ui/Screens/schedule/choose_schedule_year.dart';
-import 'package:untitled4/ui/Screens/schedule/schedule_page.dart';
 import '../../summary/choose_summary_year.dart';
 import '../news/news.dart';
 
@@ -40,7 +39,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProjectProvider>(context);
-    List<NewsModel> sortedNews = List.from(provider.newsItems.reversed);
+    List<NewsModel> sortedNews = provider.newsItems;
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(

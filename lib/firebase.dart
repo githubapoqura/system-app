@@ -136,11 +136,20 @@ class Services {
   }
 
   Future<List<NewsModel>> fetchNewsFromFirebase() async {
-    final snapshot = await FirebaseFirestore.instance.collection('news').get();
+    final snapshot = await FirebaseFirestore.instance
+        .collection('news')
+        .orderBy('timestamp', descending: true)
+        .get();
+
     return snapshot.docs.map((doc) {
       return NewsModel.fromJson(doc.data(), doc.id);
     }).toList();
   }
+
+
+
+
+
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
