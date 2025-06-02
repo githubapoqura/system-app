@@ -10,7 +10,7 @@ import 'package:untitled4/ui/Screens/introduction/second_introduction.dart';
 import 'package:untitled4/ui/Screens/login/login.dart';
 import 'package:untitled4/ui/Screens/signUp/signUp.dart';
 import 'package:untitled4/ui/Screens/splash/splash.dart';
-import 'package:untitled4/ui/Screens/icon_page/table_page.dart';
+import 'package:untitled4/ui/Screens/schedule/schedule_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/summer_course_page.dart';
 import 'package:untitled4/ui/summary/summary_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/registration_page.dart';
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         '/signUp': (_) => const Signup(),
         Introduction.routeName: (_) => const Introduction(),
         SecondIntroduction.routeName: (_) => const SecondIntroduction(),
-        '/table': (_) => const TablePage(),
+        //'/table': (_) => const TablePage(),
         '/summer_course': (_) => const SummerCoursePage(),
         //'/summary': (_) => const SummaryPage(),
         '/registration': (_) => const RegistrationPage(),

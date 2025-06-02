@@ -4,6 +4,7 @@ import 'package:untitled4/news_model.dart';
 import 'package:untitled4/project_Dm.dart';
 import 'package:untitled4/subject_DM.dart';
 import 'package:untitled4/ui/Screens/book_Dm.dart';
+import 'package:untitled4/ui/Screens/schedule/schedule_dm.dart';
 import 'package:untitled4/ui/summary/summary_dm.dart';
 import 'package:untitled4/userDm.dart';
 
@@ -178,4 +179,60 @@ class Services {
       return SummaryModel.fromMap(doc.data());
     }).toList();
   }
+
+
+
+
+
+  Future<List<ScheduleDm>> getSchedule({
+    required String yearId,
+    String? departmentId,
+  }) async {
+    final fireStoreQuery = FirebaseFirestore.instance;
+
+    if (departmentId != null) {
+      final collectionRef = fireStoreQuery
+          .collection('schedule_sections')
+          .doc(yearId)
+          .collection('departments')
+          .doc(departmentId)
+          .collection('schedule');
+
+      final querySnap = await collectionRef.get();
+
+      return querySnap.docs.map((doc) => ScheduleDm.fromMap(doc.data())).toList();
+    } else {
+      final departmentsSnapshot = await fireStoreQuery
+          .collection('schedule_sections')
+          .doc(yearId)
+          .collection('departments')
+          .get();
+
+      if (departmentsSnapshot.docs.isNotEmpty) {
+        List<ScheduleDm> allSchedules = [];
+
+        for (var deptDoc in departmentsSnapshot.docs) {
+          final scheduleSnapshot = await deptDoc.reference.collection('schedule').get();
+
+          final schedules = scheduleSnapshot.docs.map((doc) {
+            return ScheduleDm.fromMap(doc.data());
+          }).toList();
+
+          allSchedules.addAll(schedules);
+        }
+
+        return allSchedules;
+      } else {
+        final generalScheduleRef = fireStoreQuery
+            .collection('schedule_sections')
+            .doc(yearId)
+            .collection('schedule');
+
+        final generalSnap = await generalScheduleRef.get();
+
+        return generalSnap.docs.map((doc) => ScheduleDm.fromMap(doc.data())).toList();
+      }
+    }
+  }
+
 }

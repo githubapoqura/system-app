@@ -10,7 +10,8 @@ import 'package:untitled4/ui/Screens/icon_page/payment_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/projects_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/registration_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/summer_course_page.dart';
-import 'package:untitled4/ui/Screens/icon_page/table_page.dart';
+import 'package:untitled4/ui/Screens/schedule/choose_schedule_year.dart';
+import 'package:untitled4/ui/Screens/schedule/schedule_page.dart';
 import '../../summary/choose_summary_year.dart';
 import '../news/news.dart';
 
@@ -152,7 +153,7 @@ class _HomeState extends State<Home> {
         page = const ChooseYearPage();
         break;
       case 1:
-        page = const TablePage();
+        page = const ChooseScheduleYear();
         break;
       case 2:
         page = const AssignmentsPage();
