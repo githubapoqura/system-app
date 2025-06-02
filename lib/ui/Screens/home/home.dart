@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled4/news_model.dart';
+import 'package:untitled4/provider/books_provider.dart';
 import 'package:untitled4/provider/project_provider.dart';
-import 'package:untitled4/ui/Screens/home/card_news.dart';
+import 'package:untitled4/ui/Screens/books/choose_year_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/assignments_page.dart';
-import 'package:untitled4/ui/Screens/icon_page/books_page.dart';
+import 'package:untitled4/ui/Screens/books/books_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/gpa_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/payment_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/projects_page.dart';
@@ -14,40 +15,15 @@ import 'package:untitled4/ui/Screens/icon_page/summer_course_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/table_page.dart';
 import '../news/news.dart';
 
-class EmptyPage extends StatefulWidget {
-  final String title;
-  const EmptyPage({super.key, required this.title});
-
-  @override
-  State<EmptyPage> createState() => _EmptyPageState();
-}
-
-class _EmptyPageState extends State<EmptyPage> {
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(
-        () => Provider.of<ProjectProvider>(context, listen: false).loadNews());
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(child: Text('This is the ${widget.title} page')),
-    );
-  }
-}
-
 class Home extends StatefulWidget {
   const Home({super.key});
+
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
-
 
   final List<Map<String, String>> iconItems = [
     {"title": "Books", "image": "assets/icons/books.png"},
@@ -84,7 +60,7 @@ class _HomeState extends State<Home> {
         index: _currentIndex,
         children: [
           _homeContent(sortedNews),
-          const BooksPage(),
+          const BooksPage(semester: 1, yearId: 'first_year'),
           const Center(child: Text('Favorites Page')),
           _profileContent(),
         ],
@@ -112,8 +88,9 @@ class _HomeState extends State<Home> {
                 ],
               ),
               CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage('assets/images/profile.png')),
+                radius: 30,
+                backgroundImage: AssetImage('assets/images/profile.png'),
+              ),
             ],
           ),
           const SizedBox(height: 16),
@@ -164,7 +141,6 @@ class _HomeState extends State<Home> {
               child: buildNewsCard(sortedNews[i + 1]),
             ),
           ),
-
         ],
       ),
     );
@@ -174,7 +150,7 @@ class _HomeState extends State<Home> {
     Widget page;
     switch (index) {
       case 0:
-        page = const BooksPage();
+        page = const ChooseYearPage();
         break;
       case 1:
         page = const TablePage();
@@ -213,15 +189,20 @@ class _HomeState extends State<Home> {
           width: 80,
           height: 80,
           decoration: BoxDecoration(
-              color: Colors.grey[200], borderRadius: BorderRadius.circular(12)),
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child:
-                  Image.asset(iconItems[index]["image"]!, fit: BoxFit.cover)),
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(iconItems[index]["image"]!, fit: BoxFit.cover),
+          ),
         ),
         const SizedBox(height: 8),
-        Text(iconItems[index]["title"]!,
-            textAlign: TextAlign.center, style: const TextStyle(fontSize: 12)),
+        Text(
+          iconItems[index]["title"]!,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 12),
+        ),
       ],
     );
   }
@@ -282,13 +263,15 @@ class _HomeState extends State<Home> {
             alignment: Alignment.bottomRight,
             children: [
               const CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage('assets/images/profile.png')),
+                radius: 50,
+                backgroundImage: AssetImage('assets/images/profile.png'),
+              ),
               Container(
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    border: Border.all(color: Colors.blue)),
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  border: Border.all(color: Colors.blue),
+                ),
                 padding: const EdgeInsets.all(4),
                 child: const Icon(Icons.edit, size: 20, color: Colors.blue),
               ),
@@ -296,11 +279,16 @@ class _HomeState extends State<Home> {
           ),
           const SizedBox(height: 8),
           const Text.rich(
-            TextSpan(text: 'Hi, ', style: TextStyle(fontSize: 16), children: [
-              TextSpan(
+            TextSpan(
+              text: 'Hi, ',
+              style: TextStyle(fontSize: 16),
+              children: [
+                TextSpan(
                   text: 'Mostafa Ali',
-                  style: TextStyle(fontWeight: FontWeight.bold))
-            ]),
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 16),
           Expanded(
@@ -316,7 +304,7 @@ class _HomeState extends State<Home> {
                   children: [
                     ListTile(
                         title: Text('Email: mostafaapoqura1732003@mail.com')),
-                    ListTile(title: Text('Phone: 01115792456'))
+                    ListTile(title: Text('Phone: 01115792456')),
                   ],
                 ),
               ],
@@ -332,8 +320,10 @@ class _HomeState extends State<Home> {
       leading: Icon(icon, color: Colors.blue),
       title: Text(title),
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (_) => EmptyPage(title: title)));
+        // يمكنك هنا استبداله لاحقًا بصفحة فعلية
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Page "$title" not implemented yet')),
+        );
       },
     );
   }

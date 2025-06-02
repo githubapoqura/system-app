@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:untitled4/news_model.dart';
 import 'package:untitled4/project_Dm.dart';
 import 'package:untitled4/subject_DM.dart';
+import 'package:untitled4/ui/Screens/book_Dm.dart';
 import 'package:untitled4/userDm.dart';
 
 class Services {
@@ -136,6 +137,25 @@ class Services {
     final snapshot = await FirebaseFirestore.instance.collection('news').get();
     return snapshot.docs.map((doc) {
       return NewsModel.fromJson(doc.data(), doc.id);
+    }).toList();
+  }
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<List<BookModel>> getBooksForSemester({
+    required String yearId,
+    required String semesterId,
+  }) async {
+    final querySnapshot = await _firestore
+        .collection('books_sections')
+        .doc(yearId)
+        .collection('semesters')
+        .doc(semesterId)
+        .collection('books')
+        .get();
+
+    return querySnapshot.docs.map((doc) {
+      return BookModel.fromMap(doc.data());
     }).toList();
   }
 }
