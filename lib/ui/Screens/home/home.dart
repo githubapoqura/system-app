@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Book'),
+
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite), label: 'Favorites'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
@@ -59,7 +59,7 @@ class _HomeState extends State<Home> {
         index: _currentIndex,
         children: [
           _homeContent(sortedNews),
-          const BooksPage(semester: 2, yearId: 'first_year'),
+
           const Center(child: Text('تحت التطوير')),
           _profileContent(),
         ],

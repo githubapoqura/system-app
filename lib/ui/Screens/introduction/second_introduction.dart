@@ -68,23 +68,6 @@ class SecondIntroduction extends StatelessWidget {
             ),
           ),
 
-          Positioned(
-            top: 40,
-            right: 20,
-            child: GestureDetector(
-              onTap: () {
-
-              },
-              child: const Text(
-                'Skip',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );
