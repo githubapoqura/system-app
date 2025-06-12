@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
 
   final List<Map<String, String>> iconItems = [
     {"title": "Books", "image": "assets/icons/books.png"},
-    {"title": "Table", "image": "assets/icons/schedule.png"},
+    {"title": "schedule", "image": "assets/icons/schedule.png"},
     {"title": "Assignments", "image": "assets/icons/assignments.png"},
     {"title": "Payment", "image": "assets/icons/payment.png"},
     {"title": "GPA", "image": "assets/icons/gpa.png"},
@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Books'),
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Book'),
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite), label: 'Favorites'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
@@ -59,8 +59,8 @@ class _HomeState extends State<Home> {
         index: _currentIndex,
         children: [
           _homeContent(sortedNews),
-          const BooksPage(semester: 1, yearId: 'first_year'),
-          const Center(child: Text('Favorites Page')),
+          const BooksPage(semester: 2, yearId: 'first_year'),
+          const Center(child: Text('تحت التطوير')),
           _profileContent(),
         ],
       ),

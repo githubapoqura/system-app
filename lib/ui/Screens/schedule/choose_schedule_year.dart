@@ -14,7 +14,8 @@ class ChooseScheduleYear extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Choose the year')),
+      appBar: AppBar(title: const Text('Schedule of years'),
+        backgroundColor: Colors.blue,),
       body: ListView.builder(
         itemCount: years.length,
         itemBuilder: (context, index) {

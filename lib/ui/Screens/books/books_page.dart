@@ -55,7 +55,7 @@ class _BooksPageState extends State<BooksPage> {
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return const Center(
                 child: Text(
-                  'لا توجد كتب متاحة لهذا السميستر.',
+                  'لا توجد كتب متاحة حتي الان.',
                   style: TextStyle(fontSize: 16),
                 ),
               );

@@ -9,7 +9,7 @@ class ChooseSummarySemester extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('choose-semester')),
+      appBar: AppBar(title: const Text('choose-semester'),backgroundColor: Colors.blue,),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
