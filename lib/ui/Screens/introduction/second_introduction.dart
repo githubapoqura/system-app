@@ -25,8 +25,8 @@ class SecondIntroduction extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 100),
-              const Text("Welcome to fci",
-                style: TextStyle(fontSize: 24,fontWeight: FontWeight.w700),
+              const Text("Your Favourite Place To Learn What You Need To Become A Software Engineer❤",
+                style: TextStyle(fontSize: 24,fontWeight: FontWeight.w700,fontStyle: FontStyle.italic),
               ),
 
               const SizedBox(height: 160),
