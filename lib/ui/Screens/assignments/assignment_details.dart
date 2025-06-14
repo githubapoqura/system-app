@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'assignment_model.dart';
 
 class AssignmentDetailPage extends StatefulWidget {
@@ -14,15 +15,26 @@ class AssignmentDetailPage extends StatefulWidget {
 class _AssignmentDetailPageState extends State<AssignmentDetailPage> {
   final TextEditingController _achieveLinkController = TextEditingController();
   late Future<Assignment> _assignmentFuture;
+  User? _currentUser;
 
   @override
   void initState() {
     super.initState();
-    _assignmentFuture = _fetchAssignmentDetails();
+    _currentUser = FirebaseAuth.instance.currentUser;
+    if (_currentUser == null) {
+      print("Error: User not logged in on detail page.");
+    } else {
+      _assignmentFuture = _fetchAssignmentDetails();
+    }
   }
 
   Future<Assignment> _fetchAssignmentDetails() async {
+    if (_currentUser == null) {
+      throw Exception("User not logged in to fetch assignment details.");
+    }
     final docSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(_currentUser!.uid)
         .collection('assignments')
         .doc(widget.assignmentId)
         .get();
@@ -37,8 +49,16 @@ class _AssignmentDetailPageState extends State<AssignmentDetailPage> {
   }
 
   Future<void> _updateAchieveLink() async {
+    if (_currentUser == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please sign in to update achievement link.')),
+      );
+      return;
+    }
     try {
       await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_currentUser!.uid)
           .collection('assignments')
           .doc(widget.assignmentId)
           .update({
@@ -65,6 +85,13 @@ class _AssignmentDetailPageState extends State<AssignmentDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_currentUser == null) {
+      return  Scaffold(
+        appBar: AppBar(title: Text('Assignment Details')),
+        body: Center(child: Text('User not logged in.')),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Assignment Details'),

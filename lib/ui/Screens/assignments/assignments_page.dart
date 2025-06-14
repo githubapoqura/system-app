@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'assignment_details.dart';
 import 'assignment_model.dart';
 
@@ -11,8 +12,38 @@ class AssignmentsListPage extends StatefulWidget {
 }
 
 class _AssignmentsListPageState extends State<AssignmentsListPage> {
+  User? _currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkCurrentUser();
+  }
+
+  Future<void> _checkCurrentUser() async {
+    if (FirebaseAuth.instance.currentUser == null) {
+      try {
+        await FirebaseAuth.instance.signInAnonymously();
+        print("Signed in anonymously.");
+      } on FirebaseAuthException catch (e) {
+        print("Failed to sign in anonymously: ${e.code}");
+        return;
+      }
+    }
+    setState(() {
+      _currentUser = FirebaseAuth.instance.currentUser;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_currentUser == null) {
+      return  Scaffold(
+        appBar: AppBar(title: Text('My Assignments')),
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Assignments'),
@@ -26,7 +57,11 @@ class _AssignmentsListPageState extends State<AssignmentsListPage> {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('assignments').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(_currentUser!.uid)
+            .collection('assignments')
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -37,7 +72,7 @@ class _AssignmentsListPageState extends State<AssignmentsListPage> {
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text('No assignments found.'));
+            return const Center(child: Text('No assignments found for this user.'));
           }
 
           final assignments = snapshot.data!.docs.map((doc) {
@@ -85,19 +120,30 @@ class _AssignmentsListPageState extends State<AssignmentsListPage> {
   }
 
   Future<void> _addDummyAssignment() async {
+    if (_currentUser == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please sign in to add assignments.')),
+      );
+      return;
+    }
+
     final newAssignment = Assignment(
       id: '',
-      title: 'Math Homework 1',
-      description: 'Complete exercises 1-5 from Chapter 3.',
-      doctorName: 'Dr. Ahmed',
-      expireDate: DateTime.now().add(const Duration(days: 7)),
+      title: 'New User Assignment',
+      description: 'This is a dummy assignment for the current user.',
+      doctorName: 'Dr. John Doe',
+      expireDate: DateTime.now().add(const Duration(days: 10)),
       achieveLink: null,
     );
 
     try {
-      await FirebaseFirestore.instance.collection('assignments').add(newAssignment.toFirestore());
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(_currentUser!.uid)
+          .collection('assignments')
+          .add(newAssignment.toFirestore());
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Dummy assignment added!')),
+        const SnackBar(content: Text('Dummy assignment added for current user!')),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
