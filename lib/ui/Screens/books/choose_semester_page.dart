@@ -9,13 +9,13 @@ class ChooseSemesterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('choose-semester')),
+      appBar: AppBar(title: const Text('Choose Semester'), backgroundColor: Colors.blue,),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           Card(
             child: ListTile(
-              title: const Text('semester-one'),
+              title: const Text('Semester One'),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 Navigator.push(
@@ -29,7 +29,7 @@ class ChooseSemesterPage extends StatelessWidget {
           ),
           Card(
             child: ListTile(
-              title: const Text('semester-two'),
+              title: const Text('Semester Two'),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 Navigator.push(

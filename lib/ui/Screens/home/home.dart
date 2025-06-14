@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
 
   final List<Map<String, String>> iconItems = [
     {"title": "Books", "image": "assets/icons/books.png"},
-    {"title": "schedule", "image": "assets/icons/schedule.png"},
+    {"title": "Schedule", "image": "assets/icons/schedule.png"},
     {"title": "Assignments", "image": "assets/icons/assignments.png"},
     {"title": "Payment", "image": "assets/icons/payment.png"},
     {"title": "GPA", "image": "assets/icons/gpa.png"},

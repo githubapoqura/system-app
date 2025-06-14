@@ -24,6 +24,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text("Profile"),
         backgroundColor: Colors.blue,
         actions: [
@@ -65,11 +66,11 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(height: 8),
             const Text.rich(
               TextSpan(
-                text: 'Hi, ',
+                text: '',
                 style: TextStyle(fontSize: 16),
                 children: [
                   TextSpan(
-                    text: 'Mostafa Ali',
+                    text: 'John Doe',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -81,7 +82,7 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   _buildProfileItem(Icons.person, 'Profile'),
                   _buildProfileItem(Icons.shield, 'Account'),
-                  _buildProfileItem(Icons.settings, 'Setting'),
+                  _buildProfileItem(Icons.settings, 'Settings'),
                   _buildProfileItem(Icons.info, 'About'),
                   const ExpansionTile(
                     leading: Icon(Icons.chat, color: Colors.blue),

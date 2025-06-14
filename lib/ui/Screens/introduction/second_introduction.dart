@@ -28,7 +28,7 @@ class SecondIntroduction extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
-                    "Your Favourite Place To Learn What You Need To Become A Software Engineer❤",
+                    "Your Favourite Place To Learn What You Need To Become A Software Engineer💻",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 24,
