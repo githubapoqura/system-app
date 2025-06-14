@@ -79,12 +79,12 @@ class _HomeState extends State<Home> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Hallo,",
+                  Text("Hello,",
                       style:
                           TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                   SizedBox(height: 4),
-                  Text("Mostafa Ali",
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
+                  Text("Welcome To FCI",
+                      style: TextStyle(fontSize: 18, color: Colors.black)),
                 ],
               ),
               CircleAvatar(
