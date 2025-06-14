@@ -154,7 +154,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-              const SizedBox(height: 70),
+              const SizedBox(height: 30),
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

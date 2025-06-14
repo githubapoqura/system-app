@@ -22,12 +22,12 @@ class Introduction extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 100),
-          const Text("W E L C O M E  T O  F C I ",
+          const Text("WELCOME TO FCI ",
 
             style: TextStyle(fontSize: 24,fontWeight: FontWeight.w700,fontStyle: FontStyle.italic),
 
           ),
-          const SizedBox(height: 160),
+          const SizedBox(height: 140),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -35,15 +35,10 @@ class Introduction extends StatelessWidget {
                 Navigator.pushNamed(context, SecondIntroduction.routeName);
               },
               ),
-
             ],
           )
-
-
         ],
       ),
-
-
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:untitled4/ui/Screens/login/login.dart';
 class SecondIntroduction extends StatelessWidget {
   static const String routeName = '/second_introduction';
 
-  const SecondIntroduction({Key? key}) : super(key: key);
+  const SecondIntroduction({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class SecondIntroduction extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 60),  // تعديل المسافة من 100 إلى 60
+                const SizedBox(height: 45),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
@@ -37,7 +37,7 @@ class SecondIntroduction extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 120),  // تعديل المسافة من 160 إلى 120
+                const SizedBox(height:80 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -52,7 +52,7 @@ class SecondIntroduction extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),  // مسافة إضافية أسفل الزر
+                const SizedBox(height: 20),
               ],
             ),
           ),
