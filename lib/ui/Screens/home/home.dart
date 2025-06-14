@@ -3,10 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:untitled4/news_model.dart';
 import 'package:untitled4/provider/project_provider.dart';
 import 'package:untitled4/ui/Screens/books/choose_year_page.dart';
-import 'package:untitled4/ui/Screens/icon_page/assignments_page.dart';
+import 'package:untitled4/ui/Screens/assignments/assignments_page.dart';
 import 'package:untitled4/ui/Screens/books/books_page.dart';
 import 'package:untitled4/ui/Screens/gpa/gpa_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/payment_page.dart';
+import 'package:untitled4/ui/Screens/icon_page/profile.dart';
 import 'package:untitled4/ui/Screens/icon_page/projects_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/registration_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/summer_course_page.dart';
@@ -61,7 +62,7 @@ class _HomeState extends State<Home> {
           _homeContent(sortedNews),
 
           const Center(child: Text('تحت التطوير')),
-          _profileContent(),
+          const ProfilePage(),
         ],
       ),
     );
@@ -155,7 +156,7 @@ class _HomeState extends State<Home> {
         page = const ChooseScheduleYear();
         break;
       case 2:
-        page = const AssignmentsPage();
+        page = const AssignmentsListPage();
         break;
       case 3:
         page = const PaymentPage();
@@ -247,72 +248,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _profileContent() {
-    return SafeArea(
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          const Text('Account',
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue)),
-          const SizedBox(height: 16),
-          Stack(
-            alignment: Alignment.bottomRight,
-            children: [
-              const CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/images/profile.png'),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                  border: Border.all(color: Colors.blue),
-                ),
-                padding: const EdgeInsets.all(4),
-                child: const Icon(Icons.edit, size: 20, color: Colors.blue),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          const Text.rich(
-            TextSpan(
-              text: 'Hi, ',
-              style: TextStyle(fontSize: 16),
-              children: [
-                TextSpan(
-                  text: 'Mostafa Ali',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: ListView(
-              children: [
-                _buildProfileItem(Icons.person, 'Profile'),
-                _buildProfileItem(Icons.shield, 'Account'),
-                _buildProfileItem(Icons.settings, 'Setting'),
-                _buildProfileItem(Icons.info, 'About'),
-                const ExpansionTile(
-                  leading: Icon(Icons.chat, color: Colors.blue),
-                  title: Text('Contact us'),
-                  children: [
-                    ListTile(
-                        title: Text('Email: mostafaapoqura1732003@mail.com')),
-                    ListTile(title: Text('Phone: 01115792456')),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildProfileItem(IconData icon, String title) {
     return ListTile(

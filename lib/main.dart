@@ -5,6 +5,8 @@ import 'package:untitled4/provider/books_provider.dart';
 import 'package:untitled4/provider/project_provider.dart';
 import 'package:untitled4/provider/summary_provider.dart';
 import 'package:untitled4/provider/user_provider.dart';
+import 'package:untitled4/ui/Screens/home/home.dart';
+import 'package:untitled4/ui/Screens/icon_page/profile.dart';
 import 'package:untitled4/ui/Screens/introduction/introduction.dart';
 import 'package:untitled4/ui/Screens/introduction/second_introduction.dart';
 import 'package:untitled4/ui/Screens/login/login.dart';
@@ -48,11 +50,13 @@ class MyApp extends StatelessWidget {
         Splash.routeName: (_) => const Splash(),
         '/login': (_) => const Login(),
         '/signUp': (_) => const Signup(),
+        '/home':(_)=>const Home(),
         Introduction.routeName: (_) => const Introduction(),
         SecondIntroduction.routeName: (_) => const SecondIntroduction(),
         //'/table': (_) => const TablePage(),
         '/summer_course': (_) => const SummerCoursePage(),
         //'/summary': (_) => const SummaryPage(),
+
         '/registration': (_) => const RegistrationPage(),
         '/projects': (_) => const ProjectsPage(),
         '/payment': (_) => const PaymentPage(),

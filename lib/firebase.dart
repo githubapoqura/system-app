@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:untitled4/news_model.dart';
 import 'package:untitled4/project_Dm.dart';
 import 'package:untitled4/subject_DM.dart';
@@ -44,11 +45,25 @@ class Services {
     return await getUserCollection().doc(userModel.id).set(userModel);
   }
 
+
   static Future<UserModel?> login(String email, String password) async {
-    await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
-    return getUser();
+    try {
+      UserCredential credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      final uid = credential.user?.uid;
+      if (uid != null) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', uid);
+      }
+
+      return getUser();
+    } catch (e) {
+      print("Login error: $e");
+      rethrow;
+    }
   }
+
 
   static Future<UserModel?> getUser() async {
     DocumentSnapshot<UserModel> documentSnapshot = await getUserCollection()
