@@ -147,10 +147,6 @@ class Services {
   }
 
 
-
-
-
-
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<List<BookModel>> getBooksForSemester({
@@ -188,10 +184,6 @@ class Services {
       return SummaryModel.fromMap(doc.data());
     }).toList();
   }
-
-
-
-
 
   Future<List<ScheduleDm>> getSchedule({
     required String yearId,
@@ -243,5 +235,8 @@ class Services {
       }
     }
   }
+
+
+
 
 }

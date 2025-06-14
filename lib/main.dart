@@ -16,7 +16,7 @@ import 'package:untitled4/ui/summary/summary_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/registration_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/projects_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/payment_page.dart';
-import 'package:untitled4/ui/Screens/icon_page/gpa_page.dart';
+import 'package:untitled4/ui/Screens/gpa/gpa_page.dart';
 import 'package:untitled4/ui/Screens/student/student.dart';
 import 'firebase_options.dart';
 

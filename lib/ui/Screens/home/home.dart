@@ -5,7 +5,7 @@ import 'package:untitled4/provider/project_provider.dart';
 import 'package:untitled4/ui/Screens/books/choose_year_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/assignments_page.dart';
 import 'package:untitled4/ui/Screens/books/books_page.dart';
-import 'package:untitled4/ui/Screens/icon_page/gpa_page.dart';
+import 'package:untitled4/ui/Screens/gpa/gpa_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/payment_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/projects_page.dart';
 import 'package:untitled4/ui/Screens/icon_page/registration_page.dart';
