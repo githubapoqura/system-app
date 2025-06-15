@@ -22,9 +22,10 @@ class Introduction extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 100),
-          const Text("WELCOME TO FCI ❤ ",
+          const Text(" WELCOME TO FCI ❤ ",
 
-            style: TextStyle(fontSize: 24,fontWeight: FontWeight.w700,fontStyle: FontStyle.italic),
+            style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700
+                ,fontStyle: FontStyle.italic),
 
           ),
           const SizedBox(height: 140),

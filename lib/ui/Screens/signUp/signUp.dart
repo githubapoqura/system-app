@@ -31,7 +31,7 @@ class _SignupState extends State<Signup> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 30),
+                const SizedBox(height: 15),
                 const Row(
                   children: [
                     SizedBox(width: 140),
@@ -45,7 +45,7 @@ class _SignupState extends State<Signup> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 15),
 
                 // Email
                 const Text("Email", style: TextStyle(fontSize: 18)),
@@ -155,7 +155,7 @@ class _SignupState extends State<Signup> {
                   },
                 ),
 
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
                     onPressed: () async {
@@ -195,9 +195,9 @@ class _SignupState extends State<Signup> {
                   ),
                 ),
 
-                const SizedBox(height: 20),
-                const Center(child: Text("or continue with", style: TextStyle(fontSize: 16))),
                 const SizedBox(height: 10),
+                const Center(child: Text("or continue with", style: TextStyle(fontSize: 16))),
+                const SizedBox(height: 8),
                 Center(
                   child: IconButton(
                     onPressed: () {},
@@ -205,16 +205,16 @@ class _SignupState extends State<Signup> {
                   ),
                 ),
 
-                const SizedBox(height: 70),
+                const SizedBox(height: 8),
                 Center(
                   child: Text.rich(
                     TextSpan(
                       text: "Already have an account? ",
-                      style: const TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 12),
                       children: [
                         TextSpan(
                           text: "Log in ",
-                          style: const TextStyle(fontSize: 16, color: Colors.blue),
+                          style: const TextStyle(fontSize: 14, color: Colors.blue),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               Navigator.push(context, MaterialPageRoute(builder: (_) => const Login()));

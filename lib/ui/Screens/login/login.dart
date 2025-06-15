@@ -27,7 +27,7 @@ class _LoginState extends State<Login> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 30),
+              const SizedBox(height: 15),
               const Center(
                 child: Text(
                   "Log in",
@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-              const SizedBox(height: 60),
+              const SizedBox(height: 15),
               const Text("Email", style: TextStyle(fontSize: 18)),
               const SizedBox(height: 8),
               TextField(
@@ -65,70 +65,63 @@ class _LoginState extends State<Login> {
                       setState(() {
                         _obscurePassword = !_obscurePassword;
                       });
-                    },),
+                    },
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Checkbox(value: false, onChanged: (value) {}),
-                      const Text("Remember me"),
-                    ],
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ForgetPassword(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "Forget password?",
+                    style: TextStyle(color: Colors.blue),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ForgetPassword(),
-                        ),
-                      );
-                    },
-                    child: const Text(
-                      "forget password?",
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  ),
-                ],
+                ),
               ),
-              const SizedBox(height: 70),
+              const SizedBox(height: 30),
               Center(
                 child: ElevatedButton(
                   onPressed: provider.loading
                       ? null
                       : () async {
-                          final success = await provider.login(
-                            context,
-                            emailController.text.trim(),
-                            passwordController.text.trim(),
-                          );
+                    final success = await provider.login(
+                      context,
+                      emailController.text.trim(),
+                      passwordController.text.trim(),
+                    );
 
-                          if (success) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Home()),
-                            );
-                          }
-                        },
+                    if (success) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Home()),
+                      );
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(170, 50),
                     backgroundColor: Colors.blue,
                   ),
                   child: provider.loading
                       ? const CircularProgressIndicator(
-                          color: Colors.white,
-                        )
+                    color: Colors.white,
+                  )
                       : const Text(
-                          "Log in",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
+                    "Log in",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               const Center(
                 child: Text("or continue with", style: TextStyle(fontSize: 16)),
               ),
@@ -154,27 +147,24 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
+              const Center(
+                child: Text("Didn't have an account?", style: TextStyle(fontSize: 12)),
+              ),
+              const SizedBox(height: 4),
               Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Didn't have an account? ",
-                        style: TextStyle(fontSize: 16)),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/signUp');
-                      },
-                      child: const Text(
-                        "Sign up",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.blue,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/signUp');
+                  },
+                  child: const Text(
+                    "Sign up",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline,
                     ),
-                  ],
+                  ),
                 ),
               ),
             ],

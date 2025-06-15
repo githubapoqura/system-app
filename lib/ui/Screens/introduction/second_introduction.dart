@@ -24,7 +24,7 @@ class SecondIntroduction extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 45),
+                const SizedBox(height: 30),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
@@ -37,7 +37,7 @@ class SecondIntroduction extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height:80 ),
+                const SizedBox(height:25 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
