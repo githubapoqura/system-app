@@ -5,16 +5,16 @@ class ChooseSummaryYear extends StatelessWidget {
   const ChooseSummaryYear({super.key});
 
   static const List<Map<String, String>> years = [
-    {'id': 'first_year', 'name': 'first-year'},
-    {'id': 'second_year', 'name': 'second-year'},
-    {'id': 'third_year', 'name': 'third-year'},
-    {'id': 'fourth_year', 'name': 'fourth-year'},
+    {'id': 'first_year', 'name': '1st Year'},
+    {'id': 'second_year', 'name': '2nd Year'},
+    {'id': 'third_year', 'name': '3rd Year'},
+    {'id': 'fourth_year', 'name': '4th Year'},
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('choose the summary '),backgroundColor: Colors.blue,),
+      appBar: AppBar(title: const Text('Choose The Year '),backgroundColor: Colors.blue,),
       body: ListView.builder(
         itemCount: years.length,
         itemBuilder: (context, index) {

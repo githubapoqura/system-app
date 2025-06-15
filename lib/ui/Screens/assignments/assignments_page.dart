@@ -39,13 +39,13 @@ class _AssignmentsListPageState extends State<AssignmentsListPage> {
   Widget build(BuildContext context) {
     if (_currentUser == null) {
       return  Scaffold(
-        appBar: AppBar(title: Text('My Assignments')),
+        appBar: AppBar(title: Text('My Assignments'),),
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar( backgroundColor: Colors.blue,
         title: const Text('My Assignments'),
         actions: [
           IconButton(

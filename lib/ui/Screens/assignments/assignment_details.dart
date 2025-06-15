@@ -93,7 +93,7 @@ class _AssignmentDetailPageState extends State<AssignmentDetailPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar( backgroundColor: Colors.blue,
         title: const Text('Assignment Details'),
       ),
       body: FutureBuilder<Assignment>(

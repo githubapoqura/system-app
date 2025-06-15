@@ -126,7 +126,7 @@ class _HomeState extends State<Home> {
             ),
           ),
           const SizedBox(height: 16),
-          const Text("Latest News",
+          const Text("Latests Announcements",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           if (sortedNews.isNotEmpty)
@@ -255,7 +255,6 @@ class _HomeState extends State<Home> {
       leading: Icon(icon, color: Colors.blue),
       title: Text(title),
       onTap: () {
-        // يمكنك هنا استبداله لاحقًا بصفحة فعلية
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Page "$title" not implemented yet')),
         );
